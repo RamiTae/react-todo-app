@@ -4,7 +4,7 @@ import Todo from "./Todo";
 
 export default function SearchList({ todo, searchState, handleTodo }) {
   return (
-    <div id="TodoList">
+    <div id="SearchList">
       <ListTitle />
       <Todo />
     </div>
