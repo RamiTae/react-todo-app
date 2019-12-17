@@ -13,12 +13,14 @@ export default class AddTitle extends Component {
   }
 
   handleOnClick() {
-    console.log(this.props.handleSearchState(false));
+    // console.log(this.props.handleSearchState(false));
+    this.props.handleSearchState(false);
     this.setState({ isAddingTitle: true });
   }
 
   handleOnChange(e) {
-    console.log(this.props.handleNowTitle(e.target.value));
+    // console.log(this.props.handleNowTitle(e.target.value));
+    this.props.handleNowTitle(e.target.value);
   }
 
   handleKeyClick(e) {

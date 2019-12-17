@@ -3,8 +3,11 @@ import "./Search.css";
 
 export default function Search({ isSearching, handleSearchState }) {
   function handleChange(e) {
-    console.log(handleSearchState(true, e.target.value));
-    // console.log(e.target.value);
+    // console.log(handleSearchState(true, e.target.value));
+    handleSearchState(true, e.target.value);
+    if (!e.target.value) {
+      handleSearchState(false);
+    }
   }
 
   return (

@@ -58,11 +58,17 @@ class App extends Component {
   }
 
   handleNowTitle(nowTitle) {
+    const searchState = Object.assign(this.state.searchState);
+    searchState.isSearching = false;
+    this.setState({ searchState });
     this.setState({ nowTitle });
     return { nowTitle, "state nowTitle": this.state.nowTitle };
   }
 
   handleAddTitle(newTitle) {
+    if (!newTitle) {
+      return;
+    }
     const titles = this.state.titles.concat();
     titles.push(newTitle);
     this.setState({ titles });
@@ -83,6 +89,9 @@ class App extends Component {
   }
 
   handleAddTodo(title, text) {
+    if (!text) {
+      return;
+    }
     const todos = this.state.todos.concat().map(val => Object.assign(val));
     let indexOfTodos = this.state.indexOfTodos;
     todos.push({ title, text, index: indexOfTodos, completed: false });
