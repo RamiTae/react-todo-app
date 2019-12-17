@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Todo({ todo, handleTodo }) {
   const parseTodo = JSON.parse(todo);
-  console.log({ completed: parseTodo.completed });
+  console.log(parseTodo);
   function handleRadio(e) {
     // console.log("redio clicked", e.target.checked);
     console.log(handleTodo(parseTodo.index, "completed", !parseTodo.completed));
