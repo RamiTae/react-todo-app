@@ -75,17 +75,19 @@ class App extends Component {
   }
 
   handleTodo(index, key, value) {
-    const cpTodos = this.state.todos.concat().map(val => Object.assign(val));
-    cpTodos.find(todo => todo.index === index)[key] = value;
+    const todos = this.state.todos.concat().map(val => Object.assign(val));
+    todos.find(todo => todo.index === index)[key] = value;
     // cpTodos[index]
-    this.setState(cpTodos);
-    return cpTodos.find(todo => todo.index === index);
+    this.setState({ todos });
+    return todos.find(todo => todo.index === index);
   }
 
   handleAddTodo(title, text) {
-    const cpTodos = this.state.todos.concat().map(val => Object.assign(val));
-    cpTodos.push({ title, text, index: this.indexOfTodos, completed: false });
-    this.setState(cpTodos);
+    const todos = this.state.todos.concat().map(val => Object.assign(val));
+    let indexOfTodos = this.state.indexOfTodos;
+    todos.push({ title, text, index: indexOfTodos, completed: false });
+    indexOfTodos++;
+    this.setState({ todos, indexOfTodos });
     return { title, text };
   }
 
@@ -93,19 +95,15 @@ class App extends Component {
     const { titles, todos, searchState, nowTitle, indexOfTodos } = this.state;
     return (
       <div className="App">
-        <TitleList
-          titles={titles}
-          isSearching={this.state.searchState.isSearching}
-          handleAddTitle={this.handleAddTitle}
-          handleNowTitle={this.handleNowTitle}
-          handleSearchState={this.handleSearchState}
-        />
+        <TitleList titles={titles} isSearching={searchState.isSearching} handleAddTitle={this.handleAddTitle} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />
         {nowTitle ? (
-          this.state.searchState.isSearching ? (
+          searchState.isSearching ? (
             <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
           ) : (
-            <TodoList nowTitle={nowTitle} todos={todos} indexOfTodos={indexOfTodos} handleAddTodo={this.handleAddTodo} handleTodo={this.handleTodo} />
+            <TodoList nowTitle={nowTitle} todos={todos} handleAddTodo={this.handleAddTodo} handleTodo={this.handleTodo} />
           )
+        ) : searchState.isSearching ? (
+          <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
         ) : null}
       </div>
     );
