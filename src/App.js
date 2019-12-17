@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titles: [],
+      titles: ["test1", "test2"],
       todos: [
         {
           title: null,
@@ -33,24 +33,28 @@ class App extends Component {
 
   handleNowTitle(nowTitle) {
     this.setState({ nowTitle });
+    return { nowTitle, "state nowTitle": this.state.nowTitle };
   }
 
   handleSearchState(isSearching) {
     const searchState = Object.assign(this.searchState);
     searchState.isSearching = isSearching;
     this.setState({ searchState });
+    return searchState;
   }
 
   handleTodo(index, key, value) {
     const cpTodos = this.todos.concat().map(val => Object.assign(val));
     cpTodos[index][key] = value;
     this.setState(cpTodos);
+    return { index, key, value };
   }
 
   handleAddTodo(title, text) {
     const cpTodos = this.todos.concat().map(val => Object.assign(val));
     cpTodos.push({ title, text, index: this.indexOfTodos, completed: false });
     this.setState(cpTodos);
+    return { title, text };
   }
 
   render() {
