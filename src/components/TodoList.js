@@ -26,7 +26,7 @@ export default class TodoList extends Component {
   render() {
     const { nowTitle, todos, indexOfTodos, handleAddTodo, handleTodo } = this.props;
     let todoList = todos.filter(todo => todo.title === nowTitle);
-    console.log(todoList);
+    // console.log(todoList);
 
     //display상태에 따라 todoList 변경
     if (this.state.displayState !== "All") {
