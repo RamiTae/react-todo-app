@@ -31,7 +31,7 @@ export default class AddTitle extends Component {
   render() {
     return (
       <div>
-        {this.state.isAddingTitle ? <input type="text" onChange={this.handleOnChange} onKeyDown={this.handleKeyClick} placeholder="입력"></input> : null}
+        {this.state.isAddingTitle ? <input type="text" onChange={this.handleOnChange} onKeyDown={this.handleKeyClick} onClick={this.handleOnChange} placeholder="입력"></input> : null}
         <button onClick={this.handleOnClick}>+ 목록 추가</button>
       </div>
     );
