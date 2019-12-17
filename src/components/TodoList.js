@@ -13,6 +13,7 @@ export default class TodoList extends Component {
 
     this.handleDisplayState = this.handleDisplayState.bind(this);
     this.handleIsAddingTodo = this.handleIsAddingTodo.bind(this);
+    this.handleKeyClick = this.handleKeyClick.bind(this);
   }
 
   handleDisplayState(displayState) {
@@ -23,8 +24,15 @@ export default class TodoList extends Component {
     this.setState({ isAddingTodo });
   }
 
+  handleKeyClick(e) {
+    if (e.keyCode === 13) {
+      this.props.handleAddTodo(this.props.nowTitle, e.target.value);
+      this.setState({ isAddingTodo: false });
+    }
+  }
+
   render() {
-    const { nowTitle, todos, indexOfTodos, handleAddTodo, handleTodo } = this.props;
+    const { nowTitle, todos, handleTodo } = this.props;
     let todoList = todos.filter(todo => todo.title === nowTitle);
     // console.log(todoList);
 
@@ -36,11 +44,12 @@ export default class TodoList extends Component {
 
     return (
       <div id="TodoList">
-        <ListTitle indexOfTodos={indexOfTodos} handleAddTodo={handleAddTodo} innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={this.handleIsAddingTodo} />
+        <ListTitle innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={this.handleIsAddingTodo} />
         <Footer todoLength={todos.length} handleDisplayState={this.handleDisplayState} />
         {todoList.map((todo, idx) => (
           <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
         ))}
+        {this.state.isAddingTodo ? <input type="text" onKeyDown={this.handleKeyClick} placeholder="입력을 완료하고 싶다면 Enter를 누르세요" /> : null}
       </div>
     );
   }
