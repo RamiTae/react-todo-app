@@ -92,7 +92,7 @@ class App extends Component {
   }
 
   render() {
-    const { titles, todos, searchState, nowTitle, indexOfTodos } = this.state;
+    const { titles, todos, searchState, nowTitle } = this.state;
     return (
       <div className="App">
         <TitleList titles={titles} isSearching={searchState.isSearching} handleAddTitle={this.handleAddTitle} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />

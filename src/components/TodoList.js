@@ -38,14 +38,14 @@ export default class TodoList extends Component {
 
     //display상태에 따라 todoList 변경
     if (this.state.displayState !== "All") {
-      const check = this.state.displayState === "Active" ? true : false;
+      const check = this.state.displayState === "Active" ? false : true;
       todoList = todoList.filter(todo => todo.completed === check);
     }
 
     return (
       <div id="TodoList">
         <ListTitle innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={this.handleIsAddingTodo} />
-        <Footer todoLength={todos.length} handleDisplayState={this.handleDisplayState} />
+        <Footer displayState={this.state.displayState} todoLength={todoList.length} handleDisplayState={this.handleDisplayState} />
         {todoList.map((todo, idx) => (
           <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
         ))}
