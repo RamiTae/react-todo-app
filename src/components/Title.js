@@ -6,5 +6,5 @@ export default function Title({ title, handleNowTitle, handleSearchState }) {
     console.log("title clicked", e);
   }
 
-  return <div onClick={handleOnClick}>{title}test1</div>;
+  return <div onClick={handleOnClick}>{title}</div>;
 }
