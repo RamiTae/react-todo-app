@@ -2,7 +2,6 @@ import React from "react";
 import "./Search.css";
 
 export default function Search({ isSearching, handleSearchState }) {
-  console.log(isSearching);
   function handleChange(e) {
     console.log(handleSearchState(true, e.target.value));
     // console.log(e.target.value);
