@@ -67,7 +67,13 @@ class App extends Component {
     const { titles, todos, searchState, nowTitle, indexOfTodos } = this.state;
     return (
       <div className="App">
-        <TitleList titles={titles} handleAddTitle={this.handleAddTitle} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />
+        <TitleList
+          titles={titles}
+          isSearching={this.state.searchState.isSearching}
+          handleAddTitle={this.handleAddTitle}
+          handleNowTitle={this.handleNowTitle}
+          handleSearchState={this.handleSearchState}
+        />
         {this.state.searchState.isSearching ? (
           <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
         ) : (
