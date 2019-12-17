@@ -54,10 +54,15 @@ class App extends Component {
   }
 
   render() {
+    const { titles, todos, searchState, nowTitle, indexOfTodos } = this.state;
     return (
       <div className="App">
-        <TitleList />
-        {this.state.searchState.isSearching ? <SearchList /> : <TodoList />}
+        <TitleList titles={titles} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />
+        {this.state.searchState.isSearching ? (
+          <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
+        ) : (
+          <TodoList nowTitle={nowTitle} todos={todos} indexOfTodos={indexOfTodos} handleAddTodo={this.handleAddTodo} handleTodo={this.handleTodo} />
+        )}
       </div>
     );
   }
