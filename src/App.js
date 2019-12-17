@@ -8,14 +8,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titles: ["test1", "test2"],
+      titles: [],
       todos: [
-        {
-          title: null,
-          text: null,
-          index: null,
-          completed: false
-        }
+        // {
+        //   title: null,
+        //   text: null,
+        //   index: null,
+        //   completed: false
+        // }
       ],
       indexOfTodos: 0,
       nowTitle: null,
@@ -24,6 +24,31 @@ class App extends Component {
         text: null
       }
     };
+
+    //test case-------------------------
+    this.state.titles = ["test1", "test2"];
+    this.state.todos = [
+      {
+        title: "test1",
+        text: "null",
+        index: 0,
+        completed: false
+      },
+      {
+        title: "test1",
+        text: "null",
+        index: 1,
+        completed: false
+      },
+      {
+        title: "test2",
+        text: "null",
+        index: 2,
+        completed: false
+      }
+    ];
+    this.state.indexOfTodos = 3;
+    //----------------------------------
 
     this.handleNowTitle = this.handleNowTitle.bind(this);
     this.handleAddTitle = this.handleAddTitle.bind(this);
