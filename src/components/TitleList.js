@@ -26,7 +26,7 @@ export default class TitleList extends Component {
     const { titles, handleNowTitle, handleSearchState } = this.props;
     return (
       <div id="TitleList">
-        <Search />
+        <Search handleSearchState={handleSearchState} />
         {titles.map((title, idx) => (
           <Title key={idx} title={title} handleNowTitle={handleNowTitle} handleSearchState={handleSearchState} />
         ))}

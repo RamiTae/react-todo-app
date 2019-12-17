@@ -36,9 +36,8 @@ class App extends Component {
     return { nowTitle, "state nowTitle": this.state.nowTitle };
   }
 
-  handleSearchState(isSearching) {
-    const searchState = Object.assign(this.searchState);
-    searchState.isSearching = isSearching;
+  handleSearchState(isSearching, text = null) {
+    const searchState = { isSearching, text };
     this.setState({ searchState });
     return searchState;
   }
