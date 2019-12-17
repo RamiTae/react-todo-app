@@ -26,6 +26,7 @@ class App extends Component {
     };
 
     this.handleNowTitle = this.handleNowTitle.bind(this);
+    this.handleAddTitle = this.handleAddTitle.bind(this);
     this.handleSearchState = this.handleSearchState.bind(this);
     this.handleTodo = this.handleTodo.bind(this);
     this.handleAddTodo = this.handleAddTodo.bind(this);
@@ -34,6 +35,12 @@ class App extends Component {
   handleNowTitle(nowTitle) {
     this.setState({ nowTitle });
     return { nowTitle, "state nowTitle": this.state.nowTitle };
+  }
+
+  handleAddTitle(newTitle) {
+    const titles = this.state.titles.concat();
+    titles.push(newTitle);
+    this.setState({ titles });
   }
 
   handleSearchState(isSearching, text = null) {
@@ -60,7 +67,7 @@ class App extends Component {
     const { titles, todos, searchState, nowTitle, indexOfTodos } = this.state;
     return (
       <div className="App">
-        <TitleList titles={titles} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />
+        <TitleList titles={titles} handleAddTitle={this.handleAddTitle} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />
         {this.state.searchState.isSearching ? (
           <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
         ) : (
