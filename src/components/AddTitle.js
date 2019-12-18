@@ -12,9 +12,12 @@ export default class AddTitle extends Component {
     this.handleKeyClick = this.handleKeyClick.bind(this);
   }
 
+  componentDidMount() {
+    //마우스 클릭을 지켜봄.
+    //* isAddingTitle === true : text박스 이외의 공간 클릭 > isSearching이 false로 & titles에 데이터 추가
+  }
+
   handleOnClick() {
-    // console.log(this.props.handleSearchState(false));
-    this.props.handleSearchState(false);
     this.setState({ isAddingTitle: true });
   }
 
@@ -33,7 +36,7 @@ export default class AddTitle extends Component {
   render() {
     return (
       <div>
-        {this.state.isAddingTitle ? <input type="text" onChange={this.handleOnChange} onKeyDown={this.handleKeyClick} onClick={this.handleOnChange} placeholder="입력"></input> : null}
+        {this.state.isAddingTitle ? <input type="text" onChange={this.handleOnChange} onKeyDown={this.handleKeyClick} onClick={this.handleOnChange} placeholder="입력" autoFocus></input> : null}
         <button onClick={this.handleOnClick}>+ 목록 추가</button>
       </div>
     );

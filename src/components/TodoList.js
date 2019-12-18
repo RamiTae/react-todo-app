@@ -2,54 +2,55 @@ import React, { Component } from "react";
 import ListTitle from "./ListTitle";
 import Footer from "./Footer";
 import Todo from "./Todo";
+import AddTodo from "./AddTodo";
 
 export default class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayState: "All",
       isAddingTodo: false
     };
 
-    this.handleDisplayState = this.handleDisplayState.bind(this);
     this.handleIsAddingTodo = this.handleIsAddingTodo.bind(this);
-    this.handleKeyClick = this.handleKeyClick.bind(this);
   }
 
-  handleDisplayState(displayState) {
-    this.setState({ displayState });
+  componentDidMount() {
+    //마우스 클릭을 지켜봄.
+    //* isAddingTodo === true : text박스 이외의 공간 클릭 > isAddingTodo 이 false로 & todo에 데이터 추가
   }
 
   handleIsAddingTodo(isAddingTodo) {
     this.setState({ isAddingTodo });
   }
 
-  handleKeyClick(e) {
-    if (e.keyCode === 13) {
-      this.props.handleAddTodo(this.props.nowTitle, e.target.value);
-      this.setState({ isAddingTodo: false });
-    }
-  }
-
   render() {
-    const { nowTitle, todos, handleTodo } = this.props;
+    const { nowTitle, todos, handleTodo, handleAddTodo, handleDisplayState, displayState } = this.props;
     let todoList = todos.filter(todo => todo.title === nowTitle);
     // console.log(todoList);
 
     //display상태에 따라 todoList 변경
-    if (this.state.displayState !== "All") {
-      const check = this.state.displayState === "Active" ? false : true;
+    if (displayState === "All") {
+      todoList.sort((todoA, todoB) => {
+        if (todoA.completed && !todoB.completed) {
+          return 1;
+        } else if (!todoA.completed && todoB.completed) {
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      const check = displayState === "Active" ? false : true;
       todoList = todoList.filter(todo => todo.completed === check);
     }
 
     return (
       <div id="TodoList">
         <ListTitle innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={this.handleIsAddingTodo} />
-        <Footer displayState={this.state.displayState} todoLength={todoList.length} handleDisplayState={this.handleDisplayState} />
+        <Footer displayState={displayState} todoLength={todoList.length} handleDisplayState={handleDisplayState} />
         {todoList.map((todo, idx) => (
           <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
         ))}
-        {this.state.isAddingTodo ? <input type="text" onKeyDown={this.handleKeyClick} placeholder="입력을 완료하고 싶다면 Enter를 누르세요" /> : null}
+        {this.state.isAddingTodo ? <AddTodo nowTitle={nowTitle} handleAddTodo={handleAddTodo} handleIsAddingTodo={this.handleIsAddingTodo} /> : null}
       </div>
     );
   }

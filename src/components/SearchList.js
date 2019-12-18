@@ -7,8 +7,8 @@ export default function SearchList({ todos, searchState, handleTodo }) {
   return (
     <div id="SearchList">
       <ListTitle innerText={`"${searchState.text}"에 대한 검색 결과`} className="ListTitle-searchTitle" />
-      {todoList.map(todo => (
-        <Todo todo={JSON.stringify(todo)} handleTodo={handleTodo} isSearching={true} />
+      {todoList.map((todo, key) => (
+        <Todo key={key} todo={JSON.stringify(todo)} handleTodo={handleTodo} isSearching={true} />
       ))}
     </div>
   );

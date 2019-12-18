@@ -5,7 +5,7 @@ export default function ListTitle({ innerText, className, handleIsAddingTodo }) 
     handleIsAddingTodo(true);
   }
 
-  console.log({ innerText, className });
+  // console.log({ innerText, className });
   return (
     <div className={className}>
       {innerText}

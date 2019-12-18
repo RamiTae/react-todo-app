@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Footer({ displayState, todoLength, handleDisplayState }) {
-  console.log({ displayState });
+  // console.log({ displayState });
   let text = "총";
   if (displayState !== "All") {
     text = displayState === "Active" ? "할 일" : "완료됨";

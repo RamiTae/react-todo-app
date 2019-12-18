@@ -9,20 +9,14 @@ class App extends Component {
     super(props);
     this.state = {
       titles: [],
-      todos: [
-        // {
-        //   title: null,
-        //   text: null,
-        //   index: null,
-        //   completed: false
-        // }
-      ],
+      todos: [],
       indexOfTodos: 0,
       nowTitle: null,
       searchState: {
         isSearching: false,
         text: null
-      }
+      },
+      displayState: "All"
     };
 
     //test case-------------------------
@@ -53,6 +47,7 @@ class App extends Component {
     this.handleNowTitle = this.handleNowTitle.bind(this);
     this.handleAddTitle = this.handleAddTitle.bind(this);
     this.handleSearchState = this.handleSearchState.bind(this);
+    this.handleDisplayState = this.handleDisplayState.bind(this);
     this.handleTodo = this.handleTodo.bind(this);
     this.handleAddTodo = this.handleAddTodo.bind(this);
   }
@@ -80,6 +75,10 @@ class App extends Component {
     return searchState;
   }
 
+  handleDisplayState(displayState) {
+    this.setState({ displayState });
+  }
+
   handleTodo(index, key, value) {
     const todos = this.state.todos.concat().map(val => Object.assign(val));
     todos.find(todo => todo.index === index)[key] = value;
@@ -101,19 +100,30 @@ class App extends Component {
   }
 
   render() {
-    const { titles, todos, searchState, nowTitle } = this.state;
+    const { titles, todos, searchState, nowTitle, displayState } = this.state;
+
+    // console.log(searchState);
+
+    let init = null;
+
+    if (searchState.isSearching) {
+      init = <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />;
+    } else if (nowTitle) {
+      // console.log(todos);
+      init = <TodoList nowTitle={nowTitle} todos={todos} displayState={displayState} handleAddTodo={this.handleAddTodo} handleTodo={this.handleTodo} handleDisplayState={this.handleDisplayState} />;
+    }
+
     return (
       <div className="App">
-        <TitleList titles={titles} isSearching={searchState.isSearching} handleAddTitle={this.handleAddTitle} handleNowTitle={this.handleNowTitle} handleSearchState={this.handleSearchState} />
-        {nowTitle ? (
-          searchState.isSearching ? (
-            <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
-          ) : (
-            <TodoList nowTitle={nowTitle} todos={todos} handleAddTodo={this.handleAddTodo} handleTodo={this.handleTodo} />
-          )
-        ) : searchState.isSearching ? (
-          <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />
-        ) : null}
+        <TitleList
+          titles={titles}
+          isSearching={searchState.isSearching}
+          handleAddTitle={this.handleAddTitle}
+          handleNowTitle={this.handleNowTitle}
+          handleSearchState={this.handleSearchState}
+          handleDisplayState={this.handleDisplayState}
+        />
+        {init}
       </div>
     );
   }
