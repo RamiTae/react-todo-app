@@ -28,7 +28,7 @@ export default class TodoList extends Component {
     let todoList = todos.filter(todo => todo.title === nowTitle);
     let activeTodos = [],
       completedTodos = [];
-    let displayList;
+    let displayList, displayCompletedList;
 
     todoList.forEach(todo => {
       if (todo.completed) {
@@ -46,7 +46,11 @@ export default class TodoList extends Component {
             {activeTodos.map((todo, idx) => (
               <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
             ))}
-            <div>완료됨</div>
+          </div>
+        );
+        displayCompletedList = (
+          <div>
+            <div>완료됨({completedTodos.length})</div>
             {completedTodos.map((todo, idx) => (
               <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
             ))}
@@ -72,6 +76,7 @@ export default class TodoList extends Component {
         <Footer displayState={displayState} todoLength={todoList.length} handleDisplayState={handleDisplayState} />
         {displayList}
         {this.state.isAddingTodo ? <AddTodo nowTitle={nowTitle} handleAddTodo={handleAddTodo} handleIsAddingTodo={this.handleIsAddingTodo} /> : null}
+        {displayCompletedList}
       </div>
     );
   }
