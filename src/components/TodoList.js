@@ -26,30 +26,51 @@ export default class TodoList extends Component {
   render() {
     const { nowTitle, todos, handleTodo, handleAddTodo, handleDisplayState, displayState } = this.props;
     let todoList = todos.filter(todo => todo.title === nowTitle);
-    // console.log(todoList);
+    let activeTodos = [],
+      completedTodos = [];
+    let displayList;
+
+    todoList.forEach(todo => {
+      if (todo.completed) {
+        completedTodos.push(todo);
+      } else {
+        activeTodos.push(todo);
+      }
+    });
 
     //display상태에 따라 todoList 변경
     if (displayState === "All") {
-      todoList.sort((todoA, todoB) => {
-        if (todoA.completed && !todoB.completed) {
-          return 1;
-        } else if (!todoA.completed && todoB.completed) {
-          return -1;
-        }
-        return 0;
-      });
+      if (completedTodos.length) {
+        displayList = (
+          <div>
+            {activeTodos.map((todo, idx) => (
+              <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
+            ))}
+            <div>완료됨</div>
+            {completedTodos.map((todo, idx) => (
+              <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
+            ))}
+          </div>
+        );
+      } else {
+        displayList = (
+          <div>
+            {activeTodos.map((todo, idx) => (
+              <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
+            ))}
+          </div>
+        );
+      }
     } else {
-      const check = displayState === "Active" ? false : true;
-      todoList = todoList.filter(todo => todo.completed === check);
+      todoList = displayState === "Active" ? activeTodos : completedTodos;
+      displayList = todoList.map((todo, idx) => <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />);
     }
 
     return (
       <div id="TodoList">
         <ListTitle innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={this.handleIsAddingTodo} />
         <Footer displayState={displayState} todoLength={todoList.length} handleDisplayState={handleDisplayState} />
-        {todoList.map((todo, idx) => (
-          <Todo key={idx} todo={JSON.stringify(todo)} handleTodo={handleTodo} />
-        ))}
+        {displayList}
         {this.state.isAddingTodo ? <AddTodo nowTitle={nowTitle} handleAddTodo={handleAddTodo} handleIsAddingTodo={this.handleIsAddingTodo} /> : null}
       </div>
     );
