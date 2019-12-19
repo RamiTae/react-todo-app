@@ -4,7 +4,7 @@ import Search from "./Search";
 import Title from "./Title";
 import AddTitle from "./AddTitle";
 
-export default function TitleList({ titles, isSearching, handleAddTitle, handleNowTitle, handleSearchState, handleDisplayState }) {
+export default function TitleList({ titles, isSearching, isAddingTitle, handleIsAddingTitle, handleAddTitle, handleNowTitle, handleSearchState, handleDisplayState }) {
   return (
     <div id="TitleList">
       <Search isSearching={isSearching} handleSearchState={handleSearchState} />
@@ -12,7 +12,7 @@ export default function TitleList({ titles, isSearching, handleAddTitle, handleN
         <Title key={idx} title={title} handleNowTitle={handleNowTitle} handleDisplayState={handleDisplayState} />
       ))}
 
-      <AddTitle handleNowTitle={handleNowTitle} handleAddTitle={handleAddTitle} />
+      <AddTitle isAddingTitle={isAddingTitle} handleIsAddingTitle={handleIsAddingTitle} handleNowTitle={handleNowTitle} handleAddTitle={handleAddTitle} />
     </div>
   );
 }

@@ -1,44 +1,26 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class AddTitle extends Component {
-  constructor(props) {
-    //{ handleSearchState, handleNowTitle, handleAddTitle }
-    super(props);
-    this.state = {
-      isAddingTitle: false
-    };
-    this.handleOnClick = this.handleOnClick.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleKeyClick = this.handleKeyClick.bind(this);
+export default function AddTitle({ isAddingTitle, handleIsAddingTitle, handleNowTitle, handleAddTitle }) {
+  function handleOnClick() {
+    handleIsAddingTitle(true);
   }
 
-  componentDidMount() {
-    //마우스 클릭을 지켜봄.
-    //* isAddingTitle === true : text박스 이외의 공간 클릭 > isSearching이 false로 & titles에 데이터 추가
+  function handleOnChange(e) {
+    // console.log(thandleNowTitle(e.target.value));
+    handleNowTitle(e.target.value);
   }
 
-  handleOnClick() {
-    this.setState({ isAddingTitle: true });
-  }
-
-  handleOnChange(e) {
-    // console.log(this.props.handleNowTitle(e.target.value));
-    this.props.handleNowTitle(e.target.value);
-  }
-
-  handleKeyClick(e) {
+  function handleKeyClick(e) {
     if (e.keyCode === 13) {
-      this.setState({ isAddingTitle: false });
-      this.props.handleAddTitle(e.target.value);
+      handleIsAddingTitle(false);
+      handleAddTitle(e.target.value);
     }
   }
 
-  render() {
-    return (
-      <div>
-        {this.state.isAddingTitle ? <input type="text" onChange={this.handleOnChange} onKeyDown={this.handleKeyClick} onClick={this.handleOnChange} placeholder="입력" autoFocus></input> : null}
-        <button onClick={this.handleOnClick}>+ 목록 추가</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      {isAddingTitle ? <input type="text" id="AddTitle_text_input" onChange={handleOnChange} onKeyDown={handleKeyClick} onClick={handleOnChange} placeholder="입력" autoFocus></input> : null}
+      <button onClick={handleOnClick}>+ 목록 추가</button>
+    </div>
+  );
 }
