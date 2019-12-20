@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ListTitle from "./ListTitle";
-import Footer from "./Footer";
+import Filter from "./Filter";
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 
@@ -73,7 +73,7 @@ export default class TodoList extends Component {
     return (
       <div id="TodoList">
         <ListTitle innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={this.handleIsAddingTodo} />
-        <Footer displayState={displayState} todoLength={todoList.length} handleDisplayState={handleDisplayState} />
+        <Filter displayState={displayState} todoLength={todoList.length} handleDisplayState={handleDisplayState} />
         {displayList}
         {this.state.isAddingTodo ? <AddTodo nowTitle={nowTitle} handleAddTodo={handleAddTodo} handleIsAddingTodo={this.handleIsAddingTodo} /> : null}
         {displayCompletedList}

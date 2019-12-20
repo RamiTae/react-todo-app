@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Footer({ displayState, todoLength, handleDisplayState }) {
+export default function Filter({ displayState, todoLength, handleDisplayState }) {
   // console.log({ displayState });
   let text = "총";
   if (displayState !== "All") {
