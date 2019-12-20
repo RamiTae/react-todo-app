@@ -13,14 +13,10 @@ export default function Todo({ todo, handleTodo, isSearching }) {
   return (
     <div className="Todo">
       {isSearching ? `[${parseTodo.title}] ` : null}
-      <input type="checkbox" className="flex" onClick={handleCheckbox} checked={parseTodo.completed} />
-      {/* <span>{enterToBr}</span> */}
-      <span className="flex">
+      <input type="checkbox" onClick={handleCheckbox} checked={parseTodo.completed} />
+      <span>
         {spletedByEnter.map((text, key) => (
-          <p key={key}>
-            {text}
-            <br />
-          </p>
+          <p key={key}>{text}</p>
         ))}
       </span>
       {/* <button>delete</button> */}
