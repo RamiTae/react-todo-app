@@ -1,0 +1,7 @@
+p {
+  margin: 0;
+}
+.Todo {
+  display: flex;
+  justify-content: flex-start;
+}

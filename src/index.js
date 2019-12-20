@@ -3,8 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import Data from "./fakeData";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const data = Data();
+ReactDOM.render(<App titles={data.titles} todos={data.todos} indexOfTodos={data.indexOfTodos} />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
