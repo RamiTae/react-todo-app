@@ -1,4 +1,5 @@
 import React from "react";
+import "./Todo.css";
 
 export default function Todo({ todo, handleTodo, isSearching }) {
   const parseTodo = JSON.parse(todo);
@@ -7,12 +8,21 @@ export default function Todo({ todo, handleTodo, isSearching }) {
     // console.log(handleTodo(parseTodo.index, "completed", !parseTodo.completed));
     handleTodo(parseTodo.index, "completed", !parseTodo.completed);
   }
+  const spletedByEnter = parseTodo.text.split("\n");
 
   return (
-    <div>
+    <div className="Todo">
       {isSearching ? `[${parseTodo.title}] ` : null}
-      <input type="checkbox" onClick={handleCheckbox} checked={parseTodo.completed} />
-      <span>{parseTodo.text}</span>
+      <input type="checkbox" className="flex" onClick={handleCheckbox} checked={parseTodo.completed} />
+      {/* <span>{enterToBr}</span> */}
+      <span className="flex">
+        {spletedByEnter.map((text, key) => (
+          <p key={key}>
+            {text}
+            <br />
+          </p>
+        ))}
+      </span>
       {/* <button>delete</button> */}
     </div>
   );

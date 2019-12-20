@@ -31,7 +31,7 @@ class App extends Component {
       },
       {
         title: "title1",
-        text: "text2",
+        text: "text2\nline2",
         index: 1,
         completed: false
       },
