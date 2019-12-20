@@ -17,10 +17,13 @@ class App extends Component {
         text: null
       },
       displayState: "All",
-      isAddingTitle: false
+      isAddingTitle: false,
+      isAddingTodo: false
     };
 
-    //더러운.... this바인딩들......
+    //더러운.... this바인딩......
+    this.watchAppClick = this.watchAppClick.bind(this);
+
     this.handleNowTitle = this.handleNowTitle.bind(this); //* 현재 목록 변경
     this.handleAddTitle = this.handleAddTitle.bind(this); //* 목록 추가
     this.handleTodo = this.handleTodo.bind(this); //* todo하나 변경(index, key, value를 받아 index가 일치하는 todo의 key값을 value로 바꿈)
@@ -28,8 +31,7 @@ class App extends Component {
     this.handleSearchState = this.handleSearchState.bind(this); //* search중인지 아닌지 확인하는 state 변경
     this.handleDisplayState = this.handleDisplayState.bind(this); //* 어떤 type의 todo를 display할지 결정
     this.handleIsAddingTitle = this.handleIsAddingTitle.bind(this); //* 목록추가 버튼을 눌렀는지 안눌렀는지 확인하는 state를 변경함
-
-    this.watchAppClick = this.watchAppClick.bind(this);
+    this.handleIsAddingTodo = this.handleIsAddingTodo.bind(this); //* 할 일 추가 버튼을 눌렀는지 안눌렀는지 확인하는 state 변경
   }
 
   //? App컴포넌트의 마우스 클릭을 지켜봄: 목록이나 todo추가 시 text input 외의 다른 곳 클릭 시 저장 및 상태변경
@@ -39,6 +41,12 @@ class App extends Component {
       if (e.target.id !== "AddTitle_text_input") {
         this.handleIsAddingTitle(false);
         this.handleAddTitle(this.state.nowTitle);
+      }
+    } else if (this.state.isAddingTodo) {
+      if (e.target.id !== "AddTodo") {
+        this.handleIsAddingTodo(false);
+        const nowTodoText = document.getElementById("AddTodo").value;
+        this.handleAddTodo(this.state.nowTitle, nowTodoText);
       }
     }
   }
@@ -96,8 +104,13 @@ class App extends Component {
     this.setState({ isAddingTitle });
   }
 
+  handleIsAddingTodo(isAddingTodo) {
+    // console.log(isAddingTodo);
+    this.setState({ isAddingTodo });
+  }
+
   render() {
-    const { titles, todos, searchState, isAddingTitle, nowTitle, displayState } = this.state;
+    const { titles, todos, searchState, nowTitle, isAddingTitle, isAddingTodo, displayState } = this.state;
 
     // console.log(searchState);
 
@@ -107,7 +120,18 @@ class App extends Component {
       init = <SearchList todos={todos} searchState={searchState} handleTodo={this.handleTodo} />;
     } else if (nowTitle) {
       // console.log(todos);
-      init = <TodoList nowTitle={nowTitle} todos={todos} displayState={displayState} handleAddTodo={this.handleAddTodo} handleTodo={this.handleTodo} handleDisplayState={this.handleDisplayState} />;
+      init = (
+        <TodoList
+          nowTitle={nowTitle}
+          todos={todos}
+          displayState={displayState}
+          isAddingTodo={isAddingTodo}
+          handleTodo={this.handleTodo}
+          handleAddTodo={this.handleAddTodo}
+          handleDisplayState={this.handleDisplayState}
+          handleIsAddingTodo={this.handleIsAddingTodo}
+        />
+      );
     }
 
     return (

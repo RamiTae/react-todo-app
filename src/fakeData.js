@@ -1,22 +1,22 @@
 export default function data() {
   return {
-    titles: ["title1", "title2"],
+    titles: ["191219", "191220"],
     todos: [
       {
-        title: "title1",
-        text: "text1",
+        title: "191219",
+        text: "운동하기",
         index: 0,
         completed: false
       },
       {
-        title: "title1",
-        text: "text2\nline2",
+        title: "191219",
+        text: "냉장고 파먹기\n- 토마토\n- 계란",
         index: 1,
         completed: false
       },
       {
-        title: "title2",
-        text: "text3",
+        title: "191220",
+        text: "일찍 자기",
         index: 2,
         completed: false
       }
