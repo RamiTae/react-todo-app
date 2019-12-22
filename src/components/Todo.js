@@ -1,4 +1,5 @@
 import React from "react";
+import { Checkbox } from "antd";
 import "./Todo.css";
 
 export default function Todo({ todo, handleTodo, isSearching }) {
@@ -13,7 +14,7 @@ export default function Todo({ todo, handleTodo, isSearching }) {
   return (
     <div className="Todo">
       {isSearching ? `[${parseTodo.title}] ` : null}
-      <input type="checkbox" onClick={handleCheckbox} checked={parseTodo.completed} />
+      <Checkbox onClick={handleCheckbox} checked={parseTodo.completed} />
       <span>
         {spletedByEnter.map((text, key) => (
           <p key={key}>{text}</p>
