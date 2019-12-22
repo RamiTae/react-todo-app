@@ -1,26 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
 
-export default function AddTitle({ isAddingTitle, handleIsAddingTitle, handleNowTitle, handleAddTitle }) {
-  function handleOnClick() {
-    handleIsAddingTitle(true);
+export default class AddTitle extends Component {
+  constructor(props) {
+    super(props);
+    this.titleInput = React.createRef();
+
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleKeyClick = this.handleKeyClick.bind(this);
   }
 
-  function handleOnChange(e) {
+  handleOnClick() {
+    this.props.handleIsAddingTitle(true);
+  }
+
+  handleOnChange(e) {
     // console.log(thandleNowTitle(e.target.value));
-    handleNowTitle(e.target.value);
+    this.props.handleNowTitle(e.target.value);
+    this.props.handleRef("titleInput", this.titleInput.current);
   }
 
-  function handleKeyClick(e) {
+  handleKeyClick(e) {
     if (e.keyCode === 13) {
-      handleIsAddingTitle(false);
-      handleAddTitle(e.target.value);
+      this.props.handleIsAddingTitle(false);
+      this.props.handleAddTitle(e.target.value);
     }
   }
 
-  return (
-    <div>
-      {isAddingTitle ? <input type="text" id="AddTitle_text_input" onChange={handleOnChange} onKeyDown={handleKeyClick} onClick={handleOnChange} placeholder="입력" autoFocus></input> : null}
-      <button onClick={handleOnClick}>+ 목록 추가</button>
-    </div>
-  );
+  render() {
+    const { isAddingTitle } = this.props;
+
+    return (
+      <div>
+        {isAddingTitle ? <input type="text" ref={this.titleInput} onChange={this.handleOnChange} onKeyDown={this.handleKeyClick} placeholder="입력" autoFocus></input> : null}
+        <button onClick={this.handleOnClick}>+ 목록 추가</button>
+      </div>
+    );
+  }
 }

@@ -18,10 +18,12 @@ class App extends Component {
       },
       displayState: "All",
       isAddingTitle: false,
-      isAddingTodo: false
+      isAddingTodo: false,
+      titleInput: null, //* title Input Ref 저장
+      todoInput: null //* todo Input Ref 저장
     };
 
-    //더러운.... this바인딩......
+    //더러운.... this바인딩...... 이게 최선입니까??? 아닌것같아요.. 추후에 정리할게요
     this.watchAppClick = this.watchAppClick.bind(this);
 
     this.handleNowTitle = this.handleNowTitle.bind(this); //* 현재 목록 변경
@@ -32,21 +34,31 @@ class App extends Component {
     this.handleDisplayState = this.handleDisplayState.bind(this); //* 어떤 type의 todo를 display할지 결정
     this.handleIsAddingTitle = this.handleIsAddingTitle.bind(this); //* 목록추가 버튼을 눌렀는지 안눌렀는지 확인하는 state를 변경함
     this.handleIsAddingTodo = this.handleIsAddingTodo.bind(this); //* 할 일 추가 버튼을 눌렀는지 안눌렀는지 확인하는 state 변경
+    this.handleRef = this.handleRef.bind(this); //*ref 관리
   }
 
   //? App컴포넌트의 마우스 클릭을 지켜봄: 목록이나 todo추가 시 text input 외의 다른 곳 클릭 시 저장 및 상태변경
   //* isAddingTitle === true : text박스 이외의 공간 클릭 > isSearching이 false로 & titles에 데이터 추가
   watchAppClick(e) {
-    if (this.state.isAddingTitle) {
-      if (e.target.id !== "AddTitle_text_input") {
+    const { isAddingTitle, titleInput, isAddingTodo, todoInput } = this.state;
+    if (isAddingTitle) {
+      if (e.target !== titleInput) {
         this.handleIsAddingTitle(false);
-        this.handleAddTitle(this.state.nowTitle);
+        if (titleInput) {
+          this.handleAddTitle(titleInput.value);
+          this.handleRef("titleInput", null);
+        }
       }
-    } else if (this.state.isAddingTodo) {
-      if (e.target.id !== "AddTodo") {
+    }
+
+    if (isAddingTodo) {
+      console.log(isAddingTodo, todoInput);
+      if (e.target !== todoInput) {
         this.handleIsAddingTodo(false);
-        const nowTodoText = document.getElementById("AddTodo").value;
-        this.handleAddTodo(this.state.nowTitle, nowTodoText);
+        if (todoInput) {
+          this.handleAddTodo(this.state.nowTitle, todoInput.value);
+          this.handleRef("todoInput", null);
+        }
       }
     }
   }
@@ -109,6 +121,10 @@ class App extends Component {
     this.setState({ isAddingTodo });
   }
 
+  handleRef(type, ref) {
+    this.setState({ [type]: ref });
+  }
+
   render() {
     const { titles, todos, searchState, nowTitle, isAddingTitle, isAddingTodo, displayState } = this.state;
 
@@ -130,6 +146,7 @@ class App extends Component {
           handleAddTodo={this.handleAddTodo}
           handleDisplayState={this.handleDisplayState}
           handleIsAddingTodo={this.handleIsAddingTodo}
+          handleRef={this.handleRef}
         />
       );
     }
@@ -145,6 +162,7 @@ class App extends Component {
           handleNowTitle={this.handleNowTitle}
           handleSearchState={this.handleSearchState}
           handleDisplayState={this.handleDisplayState}
+          handleRef={this.handleRef}
         />
         {init}
       </div>

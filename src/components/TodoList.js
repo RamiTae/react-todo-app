@@ -4,7 +4,7 @@ import Filter from "./Filter";
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 
-export default function TodoList({ nowTitle, todos, handleTodo, handleAddTodo, handleNowTodoText, handleDisplayState, displayState, isAddingTodo, handleIsAddingTodo }) {
+export default function TodoList({ nowTitle, todos, handleTodo, handleAddTodo, handleDisplayState, displayState, isAddingTodo, handleIsAddingTodo, handleRef }) {
   let todoList = todos.filter(todo => todo.title === nowTitle);
   let activeTodos = [],
     completedTodos = [];
@@ -51,11 +51,11 @@ export default function TodoList({ nowTitle, todos, handleTodo, handleAddTodo, h
   }
 
   return (
-    <div id="TodoList">
+    <div className="TodoList">
       <ListTitle innerText={nowTitle} className="ListTitle-todoTitle" handleIsAddingTodo={handleIsAddingTodo} />
       <Filter displayState={displayState} todoLength={todoList.length} handleDisplayState={handleDisplayState} />
       {displayList}
-      {isAddingTodo ? <AddTodo nowTitle={nowTitle} handleAddTodo={handleAddTodo} handleIsAddingTodo={handleIsAddingTodo} /> : null}
+      {isAddingTodo ? <AddTodo nowTitle={nowTitle} handleAddTodo={handleAddTodo} handleIsAddingTodo={handleIsAddingTodo} handleRef={handleRef} /> : null}
       {displayCompletedList}
     </div>
   );
